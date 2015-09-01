@@ -14,6 +14,8 @@ class History:#game history
         self._history = []
 
     def add(self, game):
+        if len(self._history)>=4:
+            self._history = self._history[1:4]
         self._history.append(game)
 
     def history(self):
@@ -21,20 +23,11 @@ class History:#game history
 
     def toJSON(self):
         jsonData = json.loads(json.dumps(self, default=lambda o: o.__dict__))
-        print jsonData
         return jsonData
 
 class Game:
-    _player1 = None #use 'o' to mark the move of player_one
-    _player2 = None #use 'x' to mark the move of player_two
-    _winner= None
-    _game_board = [] #use a list to store board state,
-    _current_player = None #use 'o' 'x' to mark
-    _start_time = datetime.now()
-    _end_time = None
-
     def __init__(self, player1, player2):
-        self._start_time = datetime.now().isoformat()
+        self._start_time = datetime.now().strftime("%d/%m/%y %H:%M:%S")
         self._id = uuid.uuid4()
         self._game_board = list('_________')
         self._player1 = player1
@@ -48,7 +41,7 @@ class Game:
     def check_winner(self):
         if self._has_winner():
             self._record_winner()
-            self._end_time = datetime.now().isoformat()
+            self._end_time = datetime.now().strftime("%d/%m/%y %H:%M:%S")
             return True
         else:
             print 'turn player...'
@@ -77,7 +70,7 @@ class Game:
         elif self._current_player == 'x':
             self._winner = self._player2
 
-    def _has_winner(self):#1 winner 2 
+    def _has_winner(self):#
         board = self._game_board
         #check if all cell are filled
         is_filled = True
@@ -101,7 +94,6 @@ class Game:
 
     def toJSON(self):
         jsonData = json.loads(json.dumps(self, default=lambda o: o.__dict__))
-        #print jsonData
         return jsonData
 
 

@@ -24,7 +24,7 @@ function initGame() {
         	var result = JSON.parse(xmlHttp.responseText);
           createBoard(result._game_board);
           setInitialPlayer(result._current_player);
-          //document.getElementById("debug").innerHTML = result;
+          history();
         }
    }
   var url = "http://localhost:6543/api/init";
@@ -115,7 +115,7 @@ function check_winner(winner){
   if (winner) {
     alert("We have a winner.");
     initGame();
-    //document.getElementById("winner").innerHTML = winner;
+    history();
     return;
   }
 }
@@ -144,12 +144,35 @@ function remove_Event_Listener(){
 function history(){
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-          var history = JSON.parse(xmlHttp.responseText);
-          alert(history._history.length);
-        }
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+      var history = JSON.parse(xmlHttp.responseText);
+      length = history._history.length;
+      for(var i=0; i<length; i++) {
+        insertTable('h'+i, history._history[i]._game_board, history._history[i]._end_time)
+      }
+    }
    }
   var url = "http://localhost:6543/api/history";
   xmlHttp.open('GET', url, true);
   xmlHttp.send(null);
+}
+
+function insertTable(cell, board, time)
+{
+  var date = new Date(time)
+  var theader = "<div class='div-table'><div class='div-table-caption'> Ended at:"+ time +"</div>";
+  var tbody = "";
+  for(var i = 0; i < 3; i++)
+  {
+    tbody += "<div class='div-table-row'>";
+    for(var j = 0; j < 3; j++)
+    {
+      tbody += "<div class='div-table-col'>";
+      tbody += board[3*i+j];
+      tbody += "</div>"
+    }
+    tbody += "</div>";
+  }
+  var tfooter = "</div>";
+  document.getElementById(cell).innerHTML = theader + tbody + tfooter;
 }

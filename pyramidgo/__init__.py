@@ -4,7 +4,7 @@ from pyramid.session import UnencryptedCookieSessionFactoryConfig
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    my_session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet')
+    my_session_factory = UnencryptedCookieSessionFactoryConfig('itsaseekreet', 1200)
     config = Configurator(settings=settings, session_factory=my_session_factory)
     config.include('pyramid_chameleon')
     config.add_static_view('static', 'static', cache_max_age=0)
