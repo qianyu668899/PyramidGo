@@ -15,6 +15,7 @@ def main(global_config, **settings):
     config.add_route('api.test', '/api/test')
     config.add_route('api.init', '/api/init')
     config.add_route('api.update', '/api/update')
+    config.add_route('api.history', '/api/history')
     #config.add_route('api.updates', '/api/updates/{gameid}')
 
     config.scan()

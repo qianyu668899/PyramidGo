@@ -16,6 +16,14 @@ class History:#game history
     def add(self, game):
         self._history.append(game)
 
+    def history(self):
+        return self._history
+
+    def toJSON(self):
+        jsonData = json.loads(json.dumps(self, default=lambda o: o.__dict__))
+        print jsonData
+        return jsonData
+
 class Game:
     _player1 = None #use 'o' to mark the move of player_one
     _player2 = None #use 'x' to mark the move of player_two
@@ -41,15 +49,18 @@ class Game:
         if self._has_winner():
             self._record_winner()
             self._end_time = datetime.now().isoformat()
+            return True
         else:
             print 'turn player...'
             self._turn_player()
+            return False
 
     def update_board(self, index):
         print "_current_player", self._current_player
         self._game_board[index] = self._current_player
 
     def is_finished(self):
+        print self._winner
         return self._winner is not None
 
     def _turn_player(self):
@@ -90,7 +101,7 @@ class Game:
 
     def toJSON(self):
         jsonData = json.loads(json.dumps(self, default=lambda o: o.__dict__))
-        print jsonData
+        #print jsonData
         return jsonData
 
 

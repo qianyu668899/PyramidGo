@@ -21,7 +21,7 @@ def init_game(request):
     # Store game and history objects to session
     session = request.session
     session['game'] = game
-    session['history'] = history
+    #session['history'] = history
     # Print game id for DEBUG
     print game.id()
     return game.toJSON()
@@ -29,10 +29,23 @@ def init_game(request):
 @view_config(route_name='api.update', renderer='json')
 def update_board(request):
     game = request.session['game']
+    history = request.session['history']
     print 'Update game board...'
     index = int(request.params['index'])
     print game.id() #for DEBUG
     game.update_board(index)
     game.check_winner()
+    request.session['game'] = game
+    if game.is_finished():
+        print "Save to history..."
+        history.add(game)
+        request.session['history'] = history
+        print history.history()
     return game.toJSON()
+
+@view_config(route_name='api.history', renderer='json')
+def get_history(request):
+    history = request.session['history']
+    print 'Get game history...'
+    return history.toJSON()
 

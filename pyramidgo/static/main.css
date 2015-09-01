@@ -49,3 +49,5 @@ td {
 .O-marker:before {
   content: "O";
 }
+#left { float:left }
+#right { float:right }

@@ -1,11 +1,14 @@
 /***************************************/
 /*         intial setup                */
 /***************************************/
+
 function init() {
   var down = "mousedown"; 
   var up = "mouseup";
   //Add event listener for button 'New  Game'
-  document.querySelector("input.button").addEventListener(up, newGame, false);
+  //var newgame = document.getElementsByTagName("newgame");
+  //newgame.addEventListener(up, newGame, false);
+  //document.querySelector("input.button").addEventListener(up, newGame, false);
   var squares = document.getElementsByTagName("td");
   for (var s = 0; s < squares.length; s++) {
     squares[s].addEventListener(down, function(evt){squareSelected(evt, getCurrentPlayer());}, false);
@@ -111,7 +114,8 @@ function updateBoard(index) {
 function check_winner(winner){
   if (winner) {
     alert("We have a winner.");
-    document.getElementById("winner").innerHTML = winner;
+    initGame();
+    //document.getElementById("winner").innerHTML = winner;
     return;
   }
 }
@@ -127,4 +131,25 @@ function switch_player(next_player){
     playerX.className = "current-player";
     playerO.className = "";
   }
+}
+
+function remove_Event_Listener(){
+  var squares = document.getElementsByTagName("td");
+  for (var s = 0; s < squares.length; s++) {
+    //alert(eventsId[s]);
+    squares[s].removeEventListener(eventsId[s]);
+  } 
+}
+
+function history(){
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+          var history = JSON.parse(xmlHttp.responseText);
+          alert(history._history.length);
+        }
+   }
+  var url = "http://localhost:6543/api/history";
+  xmlHttp.open('GET', url, true);
+  xmlHttp.send(null);
 }
