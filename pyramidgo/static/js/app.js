@@ -23,21 +23,35 @@ $("#board td").on(
    }
 );
 
+/* Control Game flow*/
 function init() {
-　//set initial player to X
-  $("#current_player").text("X");
-  createBoard();
+  //Call API service to init game and get board
+  $.ajax({
+    url: "http://0.0.0.0:6543/api/init",
+    dataType: 'json',
+    success: function(results){　
+        console.log("Init...");
+    　  createBoard(results._game_board);
+    　　$("#current_player").text(results._current_player);
+    }
+  });
 }
 
-/* Control game flow*/
-function createBoard() {
-  //document.getElementById("debug").innerHTML = "Create Board";
+function createBoard(board) {
+   var id = 0;
    $("#board td").each(function(){
-     $(this).text("");
+     if (board[id] == "_") {
+       $(this).text("");
+     }else{
+       alert(board[id]);
+       $(this).text(board[id]);
+     }
+     id = id + 1;
    });
 }
 
 function squareSelected(evt, current_player) {
+  console.log( "You clicked");
   $("#warning_alert").hide();
   var square = evt.target;
   /* check to see if the square already contains an X or O marker */
@@ -49,7 +63,7 @@ function squareSelected(evt, current_player) {
   }
   else {
     fillSquareWithMarker(square, current_player);
-    switch_player(current_player);
+    updateBoard(square.id);
     return;
   }
 }
@@ -60,16 +74,32 @@ function fillSquareWithMarker(square, player) {
   square.appendChild(marker);
 }
 
-function getCurrentPlayer() {
-  current_player = $("#current_player").text();
-  return current_player;
+function updateBoard(index) {
+  $.ajax({
+    url: "http://0.0.0.0:6543/api/update?index="+index,
+    dataType: 'json',
+    success: function(results){　
+        check_winner(results._winner);
+        switch_to_player(results._current_player);
+    }
+  });
 }
 
-function switch_player(current_player){
-  if (current_player == "X" ) {
-    $("#current_player").text("O");
+function check_winner(winner){
+  if (winner) {
+    console.log("We have a winner.");
+    init();
+    $("#warning").text("We have a winner!");
+    //history();
+    return;
   }
-  else {
-    $("#current_player").text("X");
-  }
+}
+
+/* Get current player from game board*/
+function getCurrentPlayer() {
+  return $("#current_player").text();
+}
+
+function switch_to_player(current_player){
+  $("#current_player").text(current_player);
 }

@@ -4,7 +4,7 @@ from model import Player, History, Game
 TEST_TEXT = {'name': "Yu Qian", "age": "24"}
 NO_GAME_OBJECT_ERROR = {'error': {'code': 110, 'message': 'No game object found'}}
 
-@view_config(route_name='home', renderer='templates/index.pt')
+@view_config(route_name='home', renderer='templates/index2.pt')
 def my_view(request):
     return {}
 

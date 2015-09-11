@@ -32,7 +32,7 @@ class Game:
         self._game_board = list('_________')
         self._player1 = player1
         self._player2 = player2
-        self._current_player = 'o' #Always start from the first player
+        self._current_player = 'O' #Always start from the first player
         self._winner = None
 
     def id(self):
@@ -57,17 +57,17 @@ class Game:
         return self._winner is not None
 
     def _turn_player(self):
-        if self._current_player == 'o':
-            self._current_player = 'x'
-        elif self._current_player == 'x':
-            self._current_player = 'o'
+        if self._current_player == 'O':
+            self._current_player = 'X'
+        elif self._current_player == 'X':
+            self._current_player = 'O'
         else:
             self._current_player = '_' # mark an error
 
     def _record_winner(self):
-        if self._current_player == 'o':
+        if self._current_player == 'O':
             self._winner = self._player1
-        elif self._current_player == 'x':
+        elif self._current_player == 'X':
             self._winner = self._player2
 
     def _has_winner(self):#
