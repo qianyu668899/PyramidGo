@@ -33,3 +33,31 @@
 .ownedByY {
     background-color:rgba(0,0,255,0.2);
 }
+
+.peg {
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    border: 1px solid #937e62;
+    border-radius: 50%;
+    background-color: white;
+    margin: 5px;
+    color: white;
+}
+.r {
+    background-color: #d9534f;
+    border-color: #c9302c;
+}
+.g {
+    background-color: #5cb85c;
+    border-color: #449d44;
+}
+.y {
+    background-color: #fef049;
+    border-color: #ffd663;
+}
+
+body{
+   padding-top: 50px;
+   padding-bottom: 20px;
+}
