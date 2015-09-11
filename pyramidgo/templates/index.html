@@ -40,13 +40,13 @@
    <div class="container">
        <div class="jumbotron">
            <div class="row">
-               <div id="current">
-               </div>
-               <p><a class="btn btn-lg btn-primary" id="new_game" role="button">Start a new game</a>
-           </div>
-           <div class="row">
-              <div class="col-sm-6 col-md-4">
-                <table class="board">
+              <div class="col-md-3">
+                  <h3><strong>Player</strong>&nbsp;<span class="label label-info" id="current_player">X</span></h3>
+                  <p>log...</p>
+              </div>
+              <div class="col-md-6">
+                <p> <a class="btn btn-lg btn-primary" id="new_game" role="button">New Game</a></p>
+                <table id="board">
                   <tr>
                     <td id="0"></td>
                     <td id="1"></td>
@@ -63,22 +63,23 @@
                     <td id="8"></td>
                   </tr>
                 </table>
+                  <div class="alert alert-warning" role="alert" id="warning_alert">
+                      <strong>Warning!</strong><p id="warning">...</p>
+                  </div>
               </div>
-              <div class="col-sm-6 col-md-4">
-                <table data-toggle="table" data-url="data1.json" data-cache="false" data-height="299">
+              <div class="col-md-3">
+                <table data-toggle="table" id="history">
                     <thead>
                         <tr>
-                            <th colspan="2">History</th>
+                            <th>History</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td data-field="name" id="h0">Item ID</td>
-                            <td data-field="name" id="h1">Item Name</td>
+                            <td id="h0">Board 1</td>
                         </tr>
                         <tr>
-                            <td data-field="name" id="h2">Item ID</td>
-                            <td data-field="name" id="h3">Item Name</td>
+                            <td id="h2">Board 2</td>
                         </tr>
                     </tbody>
                 </table>
